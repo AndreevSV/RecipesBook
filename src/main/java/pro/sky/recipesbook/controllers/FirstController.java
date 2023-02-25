@@ -1,4 +1,4 @@
-package pro.sky.recipesbook.Controllers;
+package pro.sky.recipesbook.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
