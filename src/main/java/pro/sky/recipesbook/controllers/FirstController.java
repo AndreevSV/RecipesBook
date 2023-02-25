@@ -1,10 +1,11 @@
-package pro.sky.recipesbook.Controllers;
+package pro.sky.recipesbook.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FirstController {
+
 
     @GetMapping
     public String startApp() {
@@ -14,12 +15,11 @@ public class FirstController {
     @GetMapping("/info")
     public String studentInfo() {
         return """
-                Имя ученика: Андреев Сергей
-                Название проекта: Книга рецептов
-                Дата создания проекта: 13.01.2023
+                Имя ученика: Андреев Сергей<br>
+                Название проекта: Книга рецептов<br>
+                Дата создания проекта: 13.01.2023<br>
                 Описание проекта: Книга рецептов должна стать веб-приложением, которая по названию ингридиента выдает необходимый рецепт""";
     }
-
 
 
 
