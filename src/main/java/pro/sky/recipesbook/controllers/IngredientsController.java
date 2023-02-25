@@ -13,8 +13,8 @@ public class IngredientsController {
 
     private final IngredientService ingredientService;
 
-    @GetMapping
-    public ResponseEntity<?> getIngredient(@RequestParam Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getIngredient(@PathVariable Integer id) {
         return ResponseEntity.ok().body(ingredientService.getIngredient(id));
     }
 

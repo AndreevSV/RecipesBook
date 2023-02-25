@@ -17,15 +17,17 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Object getIngredient(Integer id) {
         Ingredient ingredient = ingredientRepository.getIngredient(id);
-        if (ingredient != null)
-        return ingredient;
+        if (ingredient != null) {
+            return ingredient;
+        }
         return new SuccessMessageDto(false, "Ingredient with this Id not found");
     }
 
     @Override
     public SuccessMessageDto addIngredient(IngredientDto ingredientDto) {
-        if (ingredientDto.name() == null || ingredientDto.amount() <= 0 || ingredientDto.unit() == null)
+        if (ingredientDto.name() == null || ingredientDto.amount() <= 0 || ingredientDto.unit() == null) {
             return new SuccessMessageDto(false, "Incorrect data format");
+        }
         Ingredient ingredient = new Ingredient(ingredientDto.name(), ingredientDto.amount(), ingredientDto.unit());
         ingredientRepository.addIngredient(ingredient);
         return new SuccessMessageDto(true, "Ingredient added successfully");

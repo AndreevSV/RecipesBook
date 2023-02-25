@@ -3,7 +3,6 @@ package pro.sky.recipesbook.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pro.sky.recipesbook.dto.IngredientDto;
 import pro.sky.recipesbook.dto.RecipeDto;
 import pro.sky.recipesbook.dto.SuccessMessageDto;
 import pro.sky.recipesbook.model.Ingredient;
@@ -12,7 +11,6 @@ import pro.sky.recipesbook.repository.IngredientRepository;
 import pro.sky.recipesbook.repository.RecipeRepository;
 import pro.sky.recipesbook.services.RecipeService;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,18 +32,19 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public SuccessMessageDto addRecipe(RecipeDto recipeDto) {
-        if (recipeDto.name() == null || recipeDto.time() <=0) {
+        if (recipeDto.name() == null || recipeDto.time() <= 0) {
             return new SuccessMessageDto(false, "Incorrect data format");
         }
         for (String str : recipeDto.steps()) {
             if (str == null)
-            return new SuccessMessageDto(false, "Incorrect data format");
+                return new SuccessMessageDto(false, "Incorrect data format");
         }
         List<Ingredient> ingredients = new ArrayList<>();
         for (Integer index : recipeDto.ingredients()) {
             Ingredient ingredient = ingredientRepository.getIngredient(index);
-            if (ingredient == null)
+            if (ingredient == null) {
                 return new SuccessMessageDto(false, "Ingredient with this Id not found");
+            }
             ingredients.add(ingredient);
         }
         Recipe recipe = new Recipe(recipeDto.name(), recipeDto.time(), ingredients, recipeDto.steps());
