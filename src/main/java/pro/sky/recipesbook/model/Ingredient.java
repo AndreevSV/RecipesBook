@@ -9,10 +9,5 @@ public class Ingredient {
     private String name;
     private Integer amount;
     private String unit;
-
-
-
-
-
 }
 

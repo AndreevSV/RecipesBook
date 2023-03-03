@@ -8,6 +8,8 @@ import pro.sky.recipesbook.model.Ingredient;
 import pro.sky.recipesbook.repository.IngredientRepository;
 import pro.sky.recipesbook.services.IngredientService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class IngredientServiceImpl implements IngredientService {
@@ -24,6 +26,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    public List<Ingredient> getAllIngredients() {
+        return ingredientRepository.getAllIngredients();
+    }
+
+    @Override
     public SuccessMessageDto addIngredient(IngredientDto ingredientDto) {
         if (ingredientDto.name() == null || ingredientDto.amount() <= 0 || ingredientDto.unit() == null) {
             return new SuccessMessageDto(false, "Incorrect data format");
@@ -32,4 +39,33 @@ public class IngredientServiceImpl implements IngredientService {
         ingredientRepository.addIngredient(ingredient);
         return new SuccessMessageDto(true, "Ingredient added successfully");
     }
+
+    @Override
+    public SuccessMessageDto editIngredient(Integer id, IngredientDto ingredientDto) {
+        if (ingredientDto.name() != null && ingredientDto.amount() > 0 && ingredientDto.unit() != null) {
+            Ingredient ingredient = new Ingredient(ingredientDto.name(), ingredientDto.amount(), ingredientDto.unit());
+            if (ingredientRepository.putIngredient(id, ingredient)) {
+                return new SuccessMessageDto(true, "Ingredient edited successfully");
+            }
+        }
+        return new SuccessMessageDto(false, "Incorrect data format");
+    }
+
+    @Override
+    public SuccessMessageDto deleteIngredient(Integer id) {
+            if (ingredientRepository.deleteIngredient(id)) {
+                return new SuccessMessageDto(true, "Ingredient successfully deleted");
+            }
+        return new SuccessMessageDto(false, "Ingredient with this Id not found");
+    }
+
+    @Override
+    public SuccessMessageDto deleteAllIngredients() {
+        if (ingredientRepository.deleteAllIngredients()) {
+            return new SuccessMessageDto(true, "All ingredients successfully deleted");
+        }
+        return new SuccessMessageDto(false, "Something get wrong");
+    }
+
+
 }
