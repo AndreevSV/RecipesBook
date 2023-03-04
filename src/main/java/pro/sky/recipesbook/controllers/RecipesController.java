@@ -18,9 +18,28 @@ public class RecipesController {
         return ResponseEntity.ok().body(recipeService.getRecipe(id));
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAllRecipes() {
+        return ResponseEntity.ok().body(recipeService.getAllRecipes());
+    }
+
     @PostMapping
     public ResponseEntity<?> addRecipe(@RequestBody RecipeDto recipeDto) {
         return ResponseEntity.ok().body(recipeService.addRecipe(recipeDto));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editRecipe(@PathVariable Integer id, @RequestBody RecipeDto recipeDto) {
+        return ResponseEntity.ok().body(recipeService.editRecipe(id, recipeDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRecipe(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(recipeService.deleteRecipe(id));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteAllRecipes() {
+        return ResponseEntity.ok().body(recipeService.deleteAllRecipes());
+    }
 }

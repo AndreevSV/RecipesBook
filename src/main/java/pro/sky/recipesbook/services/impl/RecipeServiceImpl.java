@@ -25,9 +25,15 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Object getRecipe(Integer id) {
         Recipe recipe = recipeRepository.getRecipe(id);
-        if (recipe != null)
+        if (recipe != null) {
             return recipe;
+        }
         return new SuccessMessageDto(false, "Recipe with this Id not found");
+    }
+
+    @Override
+    public List<Recipe> getAllRecipes() {
+        return recipeRepository.getAllRecipes();
     }
 
     @Override
@@ -36,11 +42,13 @@ public class RecipeServiceImpl implements RecipeService {
             return new SuccessMessageDto(false, "Incorrect data format");
         }
         for (String str : recipeDto.steps()) {
-            if (str == null)
+            if (str == null) {
                 return new SuccessMessageDto(false, "Incorrect data format");
+            }
         }
         List<Ingredient> ingredients = new ArrayList<>();
-        for (Integer index : recipeDto.ingredients()) {
+        List<Integer> listId = recipeDto.ingredients();
+        for (Integer index : listId) {
             Ingredient ingredient = ingredientRepository.getIngredient(index);
             if (ingredient == null) {
                 return new SuccessMessageDto(false, "Ingredient with this Id not found");
@@ -52,5 +60,42 @@ public class RecipeServiceImpl implements RecipeService {
         return new SuccessMessageDto(true, "Recipe added successfully");
     }
 
+    @Override
+    public SuccessMessageDto editRecipe(Integer id, RecipeDto recipeDto) {
+        if (recipeDto.name() == null || recipeDto.time() <= 0) {
+            return new SuccessMessageDto(false, "Incorrect data format");
+        }
+        for (Integer index : recipeDto.ingredients()) {
+            if (index == null) {
+                return new SuccessMessageDto(false, "Incorrect data format");
+            }
+        }
+        for (String str : recipeDto.steps()) {
+            if (str == null) {
+                return new SuccessMessageDto(false, "Incorrect data format");
+            }
+        }
+        List<Ingredient> ingredients = new ArrayList<>();
+        Recipe recipe = new Recipe(recipeDto.name(), recipeDto.time(), ingredients, recipeDto.steps());
+        if (recipeRepository.putRecipe(id, recipe)) {
+            return new SuccessMessageDto(true, "Editing recipe done successfully");
+        }
+        return new SuccessMessageDto(false, "Editing haven't been done");
+    }
 
+    @Override
+    public SuccessMessageDto deleteRecipe(Integer id) {
+        if (recipeRepository.deleteRecipe(id)) {
+            return new SuccessMessageDto(true, "Recipe deleted successfully");
+        }
+        return new SuccessMessageDto(false, "Recipe with this Id not found");
+    }
+
+    @Override
+    public SuccessMessageDto deleteAllRecipes() {
+        if (recipeRepository.deleteAllRecipes()) {
+            return new SuccessMessageDto(true, "All recipes have been deleted");
+        }
+        return new SuccessMessageDto(false, "Something get wrong");
+    }
 }
