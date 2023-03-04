@@ -1,6 +1,7 @@
 package pro.sky.recipesbook.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipesbook.dto.IngredientDto;
 import pro.sky.recipesbook.dto.SuccessMessageDto;
@@ -32,7 +33,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public SuccessMessageDto addIngredient(IngredientDto ingredientDto) {
-        if (ingredientDto.name() == null || ingredientDto.amount() <= 0 || ingredientDto.unit() == null) {
+        if (StringUtils.isEmpty(ingredientDto.name()) || ingredientDto.amount() <= 0 || StringUtils.isEmpty(ingredientDto.unit())) {
             return new SuccessMessageDto(false, "Incorrect data format");
         }
         Ingredient ingredient = new Ingredient(ingredientDto.name(), ingredientDto.amount(), ingredientDto.unit());
@@ -42,7 +43,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public SuccessMessageDto editIngredient(Integer id, IngredientDto ingredientDto) {
-        if (ingredientDto.name() != null && ingredientDto.amount() > 0 && ingredientDto.unit() != null) {
+        if (StringUtils.isEmpty(ingredientDto.name()) && ingredientDto.amount() > 0 && StringUtils.isEmpty(ingredientDto.unit())) {
             Ingredient ingredient = new Ingredient(ingredientDto.name(), ingredientDto.amount(), ingredientDto.unit());
             if (ingredientRepository.putIngredient(id, ingredient)) {
                 return new SuccessMessageDto(true, "Ingredient edited successfully");

@@ -2,6 +2,7 @@ package pro.sky.recipesbook.services.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipesbook.dto.RecipeDto;
 import pro.sky.recipesbook.dto.SuccessMessageDto;
@@ -38,11 +39,11 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public SuccessMessageDto addRecipe(RecipeDto recipeDto) {
-        if (recipeDto.name() == null || recipeDto.time() <= 0) {
+        if (StringUtils.isBlank(recipeDto.name()) || recipeDto.time() <= 0) {
             return new SuccessMessageDto(false, "Incorrect data format");
         }
         for (String str : recipeDto.steps()) {
-            if (str == null) {
+            if (StringUtils.isBlank(str)) {
                 return new SuccessMessageDto(false, "Incorrect data format");
             }
         }
@@ -62,7 +63,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public SuccessMessageDto editRecipe(Integer id, RecipeDto recipeDto) {
-        if (recipeDto.name() == null || recipeDto.time() <= 0) {
+        if (StringUtils.isBlank(recipeDto.name()) || recipeDto.time() <= 0) {
             return new SuccessMessageDto(false, "Incorrect data format");
         }
         for (Integer index : recipeDto.ingredients()) {
@@ -71,7 +72,7 @@ public class RecipeServiceImpl implements RecipeService {
             }
         }
         for (String str : recipeDto.steps()) {
-            if (str == null) {
+            if (StringUtils.isBlank(str)) {
                 return new SuccessMessageDto(false, "Incorrect data format");
             }
         }
