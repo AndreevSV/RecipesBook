@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FirstController {
 
-
     @GetMapping
     public String startApp() {
         return "Приложение запущено";
@@ -20,8 +19,4 @@ public class FirstController {
                 Дата создания проекта: 13.01.2023<br>
                 Описание проекта: Книга рецептов должна стать веб-приложением, которая по названию ингридиента выдает необходимый рецепт""";
     }
-
-
-
-
 }

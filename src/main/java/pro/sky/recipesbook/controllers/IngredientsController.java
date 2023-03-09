@@ -28,7 +28,6 @@ public class IngredientsController {
         return ResponseEntity.ok().body(ingredientService.addIngredient(ingredientDto));
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<?> editIngredient(@PathVariable Integer id, @RequestBody IngredientDto ingredientDto) {
         return ResponseEntity.ok().body(ingredientService.editIngredient(id, ingredientDto));
