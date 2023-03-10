@@ -1,12 +1,14 @@
 package pro.sky.recipesbook.services.impl;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import pro.sky.recipesbook.services.FileRecipeService;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@Service
 public class FileRecipeServiceImpl implements FileRecipeService {
 
     @Value("${path.to.data.file}")

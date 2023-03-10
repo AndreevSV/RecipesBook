@@ -22,8 +22,11 @@ public class RecipeRepository {
 
     private final FileRecipeService fileRecipeService;
 
+    private static int counter = 0;
+
     public void addRecipe(Recipe recipe) {
-        recipes.put(recipes.size() + 1, recipe);
+        recipes.put(counter + 1, recipe);
+        counter++;
     }
 
     public Recipe getRecipe(Integer id) {
@@ -72,7 +75,7 @@ public class RecipeRepository {
     public void readFromFile() {
         try {
             String json = fileRecipeService.readFromFile();
-            new ObjectMapper().readValue(json, new TypeReference<HashMap<Integer, Ingredient>>() {
+            new ObjectMapper().readValue(json, new TypeReference<HashMap<Integer, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

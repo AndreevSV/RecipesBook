@@ -17,8 +17,11 @@ public class IngredientRepository {
 
     private final FileIngredientService fileIngredientService;
 
+    private static int counter = 0;
+
     public void addIngredient(Ingredient ingredient) {
-        ingredients.put(ingredients.size() + 1, ingredient);
+        ingredients.put(counter + 1, ingredient);
+        counter++;
     }
 
     public Ingredient getIngredient(Integer id) {
