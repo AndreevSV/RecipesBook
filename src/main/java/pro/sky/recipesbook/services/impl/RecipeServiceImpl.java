@@ -24,6 +24,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Object getRecipe(Integer id) {
+        recipeRepository.readFromFile();
         Recipe recipe = recipeRepository.getRecipe(id);
         if (recipe != null) {
             return recipe;
@@ -33,6 +34,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getAllRecipes() {
+        recipeRepository.readFromFile();
         return recipeRepository.getAllRecipes();
     }
 
@@ -54,9 +56,11 @@ public class RecipeServiceImpl implements RecipeService {
                 return new SuccessMessageDto(false, "Ingredient with this Id not found");
             }
             ingredients.add(ingredient);
+            ingredientRepository.saveToFile();
         }
         Recipe recipe = new Recipe(recipeDto.name(), recipeDto.time(), ingredients, recipeDto.steps());
         recipeRepository.addRecipe(recipe);
+        recipeRepository.saveToFile();
         return new SuccessMessageDto(true, "Recipe added successfully");
     }
 
@@ -78,6 +82,7 @@ public class RecipeServiceImpl implements RecipeService {
         List<Ingredient> ingredients = new ArrayList<>();
         Recipe recipe = new Recipe(recipeDto.name(), recipeDto.time(), ingredients, recipeDto.steps());
         if (recipeRepository.putRecipe(id, recipe)) {
+            recipeRepository.saveToFile();
             return new SuccessMessageDto(true, "Editing recipe done successfully");
         }
         return new SuccessMessageDto(false, "Editing haven't been done");
@@ -86,6 +91,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public SuccessMessageDto deleteRecipe(Integer id) {
         if (recipeRepository.deleteRecipe(id)) {
+            recipeRepository.saveToFile();
             return new SuccessMessageDto(true, "Recipe deleted successfully");
         }
         return new SuccessMessageDto(false, "Recipe with this Id not found");
@@ -94,6 +100,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public SuccessMessageDto deleteAllRecipes() {
         if (recipeRepository.deleteAllRecipes()) {
+            recipeRepository.saveToFile();
             return new SuccessMessageDto(true, "All recipes have been deleted");
         }
         return new SuccessMessageDto(false, "Something get wrong");

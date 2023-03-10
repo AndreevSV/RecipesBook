@@ -64,7 +64,6 @@ public class IngredientRepository {
         fileIngredientService.writeToFile(string);
     }
 
-
     public void readFromFile() {
         try {
             String json = fileIngredientService.readFromFile();
