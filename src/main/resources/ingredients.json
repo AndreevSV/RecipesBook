@@ -1,1 +1,1 @@
-{"allIngredients":[{"name":"flour","amount":200,"unit":"g"},{"name":"sugar","amount":450,"unit":"g"},{"name":"water","amount":500,"unit":"g"}]}
+{"1":{"name":"cardamon","amount":1,"unit":"g"},"2":{"name":"sugar","amount":450,"unit":"g"},"3":{"name":"melon","amount":1000,"unit":"g"},"5":{"name":"apple","amount":400,"unit":"g"},"6":{"name":"water","amount":300,"unit":"ml"}}
